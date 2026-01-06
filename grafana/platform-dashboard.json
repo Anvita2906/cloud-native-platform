@@ -1,0 +1,108 @@
+{
+  "dashboard": {
+    "title": "Cloud Native Platform Overview",
+    "tags": ["platform", "microservices"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Service Health Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "up{job=~\"user-service|order-service|product-service\"}",
+            "legendFormat": "{{job}}"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 8, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Request Rate (req/sec)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(user_service_requests_total[1m])) by (job)",
+            "legendFormat": "User Service"
+          },
+          {
+            "expr": "sum(rate(order_service_requests_total[1m])) by (job)",
+            "legendFormat": "Order Service"
+          },
+          {
+            "expr": "sum(rate(product_service_requests_total[1m])) by (job)",
+            "legendFormat": "Product Service"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4}
+      },
+      {
+        "id": 3,
+        "title": "P95 Latency",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(user_service_request_duration_seconds_bucket[1m]))",
+            "legendFormat": "User Service"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(order_service_request_duration_seconds_bucket[1m]))",
+            "legendFormat": "Order Service"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(product_service_request_duration_seconds_bucket[1m]))",
+            "legendFormat": "Product Service"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4}
+      },
+      {
+        "id": 4,
+        "title": "Pod Count",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "count(kube_pod_info{pod=~\"user-service.*\"}) by (pod)",
+            "legendFormat": "User Service Pods"
+          },
+          {
+            "expr": "count(kube_pod_info{pod=~\"order-service.*\"}) by (pod)",
+            "legendFormat": "Order Service Pods"
+          },
+          {
+            "expr": "count(kube_pod_info{pod=~\"product-service.*\"}) by (pod)",
+            "legendFormat": "Product Service Pods"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 8, "x": 0, "y": 12}
+      },
+      {
+        "id": 5,
+        "title": "External Service Calls",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(order_service_external_calls_total[1m])) by (service)",
+            "legendFormat": "{{service}}"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 8, "x": 8, "y": 12}
+      },
+      {
+        "id": 6,
+        "title": "Log Volume (logs/min)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate({app=\"user-service\"}[1m]))",
+            "legendFormat": "User Service",
+            "datasource": "Loki"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 8, "x": 16, "y": 12}
+      }
+    ],
+    "refresh": "5s",
+    "time": {"from": "now-15m", "to": "now"}
+  }
+}
