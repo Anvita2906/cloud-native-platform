@@ -7,23 +7,23 @@ Production-grade microservices platform demonstrating DevOps best practices.
 ┌─────────────────────────────────────────────────────┐
 │                 Kind Cluster (Local K8s)            │
 │                                                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────┐│
-│  │ User Service │  │ Order Service│  │  Product  ││
-│  │  (FastAPI)   │←→│   (FastAPI)  │←→│  Service  ││
-│  └──────────────┘  └──────────────┘  └───────────┘│
+│  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │
+│  │ User Service │  │ Order Service│  │  Product  │  │
+│  │  (FastAPI)   │←→│   (FastAPI)  │←→│  Service  │  │
+│  └──────────────┘  └──────────────┘  └───────────┘  │ 
 │                                                     │
-│  ┌─────────────────────────────────────────────┐  │
-│  │         Observability Stack                 │  │
-│  │  • Prometheus (Metrics)                     │  │
-│  │  • Grafana (Visualization)                  │  │
-│  │  • Loki (Centralized Logging)              │  │
-│  └─────────────────────────────────────────────┘  │
+│  ┌─────────────────────────────────────────────┐    │
+│  │         Observability Stack                 │    │
+│  │  • Prometheus (Metrics)                     │    │
+│  │  • Grafana (Visualization)                  │    │
+│  │  • Loki (Centralized Logging)               │    │
+│  └─────────────────────────────────────────────┘    │
 │                                                     │
-│  ┌─────────────────────────────────────────────┐  │
-│  │         GitOps & Chaos                      │  │
-│  │  • ArgoCD (Automated Deployment)            │  │
-│  │  • Litmus Chaos (Resilience Testing)       │  │
-│  └─────────────────────────────────────────────┘  │
+│  ┌─────────────────────────────────────────────┐    │
+│  │         GitOps & Chaos                      │    │
+│  │  • ArgoCD (Automated Deployment)            │    │
+│  │  • Litmus Chaos (Resilience Testing)        │    │
+│  └─────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -118,7 +118,7 @@ kubectl port-forward svc/user-service 8000:8000
 curl http://localhost:8000/users
 ```
 
-## Project Highlights for Interviews
+## Project Highlights 
 
 ### What Problems Does This Solve?
 1. **Scalability**: Microservices can scale independently
@@ -169,17 +169,6 @@ sum(rate(user_service_requests_total{status=~"5.."}[1m])) / sum(rate(user_servic
 ```promql
 histogram_quantile(0.95, rate(user_service_request_duration_seconds_bucket[1m]))
 ```
-
-## Future Enhancements
-
-- [ ] Add Jaeger for distributed tracing
-- [ ] Implement Redis for caching
-- [ ] Add PostgreSQL for persistent storage
-- [ ] Implement rate limiting with Envoy
-- [ ] Add authentication with OAuth2
-- [ ] Implement A/B testing with Flagger
-- [ ] Add cost tracking per service
-- [ ] Implement SLO alerting
 
 ## Author
 
