@@ -126,39 +126,6 @@ curl http://localhost:8000/users
 3. **Reliability**: Self-healing with chaos testing
 4. **Automation**: GitOps eliminates manual deployments
 
-### Technical Decisions & Trade-offs
-
-**Why FastAPI over Flask?**
-- Native async support for external service calls
-- Built-in OpenAPI documentation
-- Better performance for I/O-bound operations
-
-**Why Kind over Minikube?**
-- Multi-node clusters for realistic testing
-- Better Docker integration
-- Faster startup times
-
-**Why Loki over ELK?**
-- Lower resource footprint
-- Native Grafana integration
-- No indexing overhead
-
-**Why ArgoCD over Flux?**
-- Better UI for visualization
-- Easier RBAC management
-- More mature ecosystem
-
-### Scaling to Production
-
-To run this in production (EKS/GKE):
-1. Replace Kind with managed Kubernetes
-2. Add Istio service mesh for advanced routing
-3. Implement proper secrets management (Vault/AWS Secrets Manager)
-4. Add persistent storage for Prometheus/Loki
-5. Implement proper RBAC and network policies
-6. Add Cert-Manager for TLS
-7. Implement horizontal pod autoscaling with custom metrics
-
 ### Cost Optimization
 
 Current setup: **$0/month** (fully local)
